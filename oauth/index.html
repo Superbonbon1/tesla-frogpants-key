@@ -1,1 +1,14 @@
-<!doctype html><title>Tesla authorization</title><p>Authorization received. You can close this tab.</p>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tesla authorization</title>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem}code{display:block;word-break:break-all;background:#eee;padding:.75rem;border-radius:6px;font-size:1.1rem;margin:.5rem 0}button{font-size:1.1rem;padding:.6rem 1.2rem}</style></head>
+<body><h2>Tesla authorization</h2><p id="msg"></p>
+<div id="box" hidden><p><b>Code</b></p><code id="code"></code><button id="copy">Copy code</button><p><b>State</b></p><code id="state"></code>
+<p><b>Send this code to Frank.</b> It is single-use and expires in a few minutes.</p></div>
+<script>
+var p=new URLSearchParams(location.search),c=p.get('code'),s=p.get('state'),e=p.get('error');
+var m=document.getElementById('msg');
+if(c){document.getElementById('box').hidden=false;document.getElementById('code').textContent=c;document.getElementById('state').textContent=s||'';m.textContent='Authorization received.';
+document.getElementById('copy').onclick=function(){navigator.clipboard.writeText(c).then(function(){document.getElementById('copy').textContent='Copied'})}}
+else if(e){m.textContent='Tesla returned an error: '+e+' '+(p.get('error_description')||'')}
+else{m.textContent='No code in this URL. Start again from the consent link Frank sends.'}
+</script></body></html>
